@@ -8,26 +8,34 @@ namespace MetodyObliczeniowe
 {
     public class Rownanie
     {
-        public Wielomian lewaStrona { get; set; }
-        public double prawaStrona { get; set; }
+		#region Public properties
+
+        public Wielomian LewaStrona { get; set; }
+        public double PrawaStrona { get; set; }
+
+		#endregion
+
+		#region Public Method
 
         public override string ToString()
         {
-            return string.Format("{0} = {1}", lewaStrona, prawaStrona);
+            return string.Format("{0} = {1}", LewaStrona, PrawaStrona);
         }
 
         public KeyValuePair<string, double> Wylicz()
         {
-            string a = lewaStrona.An(); 
+            string a = LewaStrona.An(); 
             double wynik = 0;
-            if (prawaStrona != 0)
+            if (PrawaStrona != 0)
             {
-                double liczbaZLewejStronyRownania = lewaStrona.toCoStoiPrzyA();
-                double sumaPozostalychWezlow = Math.Round(lewaStrona.rownanieWielomianu.Sum(x => x.WartoscWezla), 14) * -1;
-                wynik = (prawaStrona + sumaPozostalychWezlow) / liczbaZLewejStronyRownania;
+                double liczbaZLewejStronyRownania = LewaStrona.ToCoStoiPrzyA();
+                double sumaPozostalychWezlow = Math.Round(LewaStrona.RownanieWielomianu.Sum(x => x.WartoscWezla), 14) * -1;
+                wynik = (PrawaStrona + sumaPozostalychWezlow) / liczbaZLewejStronyRownania;
             }
 
             return new KeyValuePair<string, double>(a, wynik);
         }
+
+		#endregion
     }
 }
