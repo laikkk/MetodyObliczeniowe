@@ -14,6 +14,7 @@ namespace MetodyObliczeniowe
 		public string PodX { get; set; }
 		// a0 + a1x0 +a2x0^2 + a3x0^3
 		public List<Wezel> RownanieWielomianu;
+		public List<Wezel> CalkowanyWielominan;
 
 		#endregion
 
@@ -54,20 +55,6 @@ namespace MetodyObliczeniowe
 			return sb.ToString();
 		}
 
-		//public Wielomian LiczPochodna(Wielomian rownanie)
-		//{
-		//	Wielomian tmp = rownanie;
-		//	tmp.RownanieWielomianu = new List<Wezel>();
-		//	rownanie.RownanieWielomianu.ForEach(x =>
-		//		{
-		//			if (x.Potega <= 0) return;
-		//			x.WspolczynnikPomocniczy = (x.Potega * x.WspolczynnikPomocniczy);
-		//			x.Potega--;
-		//			tmp.RownanieWielomianu.Add(x);
-		//		});
-		//	return tmp;
-		//}
-
 		public void PodstawAn(Dictionary<string, double> Ans)
 		{
 			RownanieWielomianu.ForEach(wezel =>
@@ -93,6 +80,20 @@ namespace MetodyObliczeniowe
 			return b > a ? Math.Round(PoliczWartoscWielomianuWPunkcie(b) - PoliczWartoscWielomianuWPunkcie(a), 4) : Math.Round(PoliczWartoscWielomianuWPunkcie(a) - PoliczWartoscWielomianuWPunkcie(b), 4);
 		}
 
+		public void WyznaczCalke()
+		{
+			CalkowanyWielominan = new List<Wezel>();
+
+			foreach (var wezel in RownanieWielomianu)
+			{
+				double wspolczynnik;
+				double.TryParse(wezel.Wspolczynnik, out wspolczynnik);
+				int newPotega = wezel.Potega + 1;
+				wspolczynnik /= newPotega;
+				CalkowanyWielominan.Add(new Wezel(newPotega, wspolczynnik.ToString(), wezel.WspolczynnikPomocniczy));
+			}
+		}
+
 		public string An()
 		{
 			return RownanieWielomianu.First().Wspolczynnik;
@@ -115,7 +116,7 @@ namespace MetodyObliczeniowe
 		private double PoliczWartoscWielomianuWPunkcie(double p)
 		{
 			double suma = 0.0;
-			foreach (var wezel in RownanieWielomianu)
+			foreach (var wezel in CalkowanyWielominan)
 			{
 				double wspolczynnik;
 				Double.TryParse(wezel.Wspolczynnik, out wspolczynnik);

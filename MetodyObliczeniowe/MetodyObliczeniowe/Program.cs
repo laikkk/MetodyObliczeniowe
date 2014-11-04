@@ -1,12 +1,6 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MetodyObliczeniowe
 {
@@ -23,11 +17,8 @@ namespace MetodyObliczeniowe
 
 			WczytajLiczby(ref a, ref b, ref x0);
 
-			Console.WriteLine();
 			Wielomian wielomian = new Wielomian(x0.ToString(), ygreks.Count);
-			Console.WriteLine("Wielomian P({0})", x0);
-			Console.WriteLine(wielomian);
-			Console.WriteLine();
+
 			Rownanie[] ukladRownan = UtworzUkladRownan(ygreks, wielomian);
 			Dictionary<string, double> tabAn = RozwiazUkladRownan(ukladRownan);
 
@@ -37,7 +28,8 @@ namespace MetodyObliczeniowe
 			Console.WriteLine(wielomian);
 			Console.WriteLine();
 
-			Console.WriteLine("Wartość całki oznaczonej P({0}) == {1}", x0, wielomian.PoliczCalke(a, b));
+			wielomian.WyznaczCalke();
+			Console.WriteLine("Wartość całki oznaczonej == {1}", x0, wielomian.PoliczCalke(a, b));
 			Console.ReadLine();
 		}
 
@@ -65,7 +57,7 @@ namespace MetodyObliczeniowe
 			Console.WriteLine("Podaj y'greki oddzielone spacjami");
 			try
 			{
-				return Console.ReadLine().Split(' ').Select(Double.Parse).ToList();
+				return Console.ReadLine().Trim().Split(' ').Select(Double.Parse).ToList();
 			}
 			catch (FormatException ex)
 			{

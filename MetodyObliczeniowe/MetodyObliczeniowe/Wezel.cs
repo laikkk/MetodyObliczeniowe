@@ -27,7 +27,15 @@ namespace MetodyObliczeniowe
 			Wspolczynnik = "a" + Potega;
 		}
 
-		public override string ToString()
+		public Wezel(int potega, string wspolczynnik, int wspPom, string x = "x")
+		{
+			Potega = potega;
+			Wspolczynnik = wspolczynnik;
+			WspolczynnikPomocniczy = wspPom;
+			X = x;
+		}
+
+	public override string ToString()
 		{
 			if (WspolczynnikPomocniczy == 0 || Wspolczynnik.Equals("0"))
 			{
