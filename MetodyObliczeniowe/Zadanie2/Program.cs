@@ -10,7 +10,6 @@ namespace Zadanie2
 		static void Main(string[] args)
 		{
 			ReadData dataReader = new ReadData();
-
 			if (dataReader.ReadParameters())
 			{
 				Calculation calculation = new Calculation(dataReader.Epsilon);

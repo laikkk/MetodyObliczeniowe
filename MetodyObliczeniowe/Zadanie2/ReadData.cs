@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -16,6 +17,7 @@ namespace Zadanie2
 		private double _b;
 		private double _epsilon;
 		private int _userCounter;
+		private const int ReadSteps = 10;
 
 		#endregion
 
@@ -53,6 +55,21 @@ namespace Zadanie2
 			get { return _userCounter; }
 		}
 
+		public int DecimalNumbers
+		{
+			get
+			{
+				double pom = _epsilon;
+				int i = 0;
+				while (pom < 1)
+				{
+					pom = pom * 10;
+					i++;
+				}
+				return i;
+			}
+		}
+
 		#endregion
 
 		#region Method
@@ -63,58 +80,94 @@ namespace Zadanie2
 		/// <returns>Zwraca wartość true lub false w zależności czy dane zostały wczytane poprawnie</returns>
 		public bool ReadParameters()
 		{
-			bool isValid = true;
-
-			Console.Write("Podaj epsilon: ");
-			if (!Double.TryParse(Console.ReadLine(), out _epsilon))
+			bool isValid = false;
+			int counter = 0;
+			while (!isValid && counter < ReadSteps)
 			{
-				Console.WriteLine("Niepoprawny format epsilon. Musi być więszy od 0 i mniejszy od 1");
+				Console.Write("Podaj epsilon: ");
+
+				if (Double.TryParse(Console.ReadLine(), out _epsilon))
+				{
+					if (_epsilon > Double.Epsilon && _epsilon < 1.0)
+						isValid = true;
+					else
+						Console.WriteLine("Epsilon musi być większy od 0 i mniejszy od 1");
+				}
+				else
+					Console.WriteLine("Niepoprawny format epsilon.");
+				counter++;
+			}
+
+			if (counter == ReadSteps && !isValid)
+				Console.WriteLine("{0} razy wprowadzono złe wartość epsilon!\n\nNastępuje koniec działa programu!!", counter);
+
+			if (isValid)
+			{
 				isValid = false;
-			}
+				counter = 0;
 
-			if (isValid)
-				if (_epsilon < 0 || _epsilon > 1)
+				while (!isValid && counter < ReadSteps)
 				{
-					Console.WriteLine("Epsilon musi być większy od 0 i mniejszy od 1");
-					isValid = false;
+					isValid = ReadEndPoints();
+					counter++;
 				}
 
-			if (isValid)
-			{
-				Console.Write("Podaj a: ");
-				if (!Double.TryParse(Console.ReadLine(), out _a))
-				{
-					Console.WriteLine("Podano nieprawdidłową wartość parametru a");
-					isValid = false;
-				}
+				if (counter == ReadSteps && !isValid)
+					Console.WriteLine("{0} razy wprowadzono złe wartość punktów końcowych a i b!\n\nNastępuje koniec działa programu!!", counter);
 			}
 
 			if (isValid)
 			{
-				Console.Write("Podaj b: ");
-				if (!Double.TryParse(Console.ReadLine(), out _b))
+				isValid = false;
+				counter = 0;
+				while (!isValid && counter < ReadSteps)
 				{
-					Console.WriteLine("Podano nieprawdidłową wartość parametru b");
-					isValid = false;
+					Console.Write("Podaj ilość kroków które wykonać: ");
+					if (Int32.TryParse(Console.ReadLine(), out _userCounter))
+					{
+						if (_userCounter > 0)
+							isValid = true;
+						else
+							Console.WriteLine("Ilość kroków nie może być mniejsza od 0");
+					}
+					else
+					{
+						Console.WriteLine("Podano nieprawdidłową wartość parametru kroków");
+					}
+					counter++;
 				}
-			}
-
-			if (isValid)
-			{
-				Console.Write("Podaj ilość kroków które wykonać: ");
-				if (!Int32.TryParse(Console.ReadLine(), out _userCounter))
-				{
-					Console.WriteLine("Podano nieprawdidłową wartość parametru kroków");
-					isValid = false;
-				}
-				else if (_userCounter <= 0)
-				{
-					Console.WriteLine("Ilość kroków nie może być mniejsza od 0");
-					isValid = false;
-				}
+				if (counter == ReadSteps && !isValid)
+					Console.WriteLine("{0} wprowadzono niepoprawną ilość kroków!\n\nNastępuje koniec działa programu!!", counter);
 			}
 
 			return isValid;
+		}
+
+		private bool ReadEndPoints()
+		{
+			Console.Write("Podaj a: ");
+			if (!Double.TryParse(Console.ReadLine(), out _a))
+			{
+				Console.WriteLine("Podano nieprawdidłową wartość parametru a.");
+				return false;
+			}
+
+			Console.Write("Podaj b: ");
+			if (!Double.TryParse(Console.ReadLine(), out _b))
+			{
+				Console.WriteLine("Podano nieprawdidłową wartość parametru b.");
+				return false;
+			}
+
+			var fa = Calculation.CalculateFx(_a);
+			var fb = Calculation.CalculateFx(_b);
+			if (fa * fb > 0)
+			{
+				Console.WriteLine("Warości funkcji w punktach a i b musi być przeciwnych znaków! Podaj nowe punkty!");
+				return false;
+			}
+
+			return true;
 		}
 
 		#endregion

@@ -10,13 +10,19 @@ namespace Zadanie2
     {
         private double _epsilon;
         private const char Kontynuacja = 'T';
+        private const char Kontynuacjat = 't';
 
         public Calculation(double epsilon)
         {
             _epsilon = epsilon;
         }
 
-        private double CalculateFx(double a)
+        /// <summary>
+        /// Wylicznie wartości funkcji w pukcie
+        /// </summary>
+        /// <param name="a">punkt w którym ma zostać obliczona funkcja</param>
+        /// <returns></returns>
+        public static double CalculateFx(double a)
         {
             return Math.Pow(a, 5) + Math.Pow(a, 1) - 5;
             //return Math.Pow(a, 3) - Math.Pow(a, 1) + 1;
@@ -33,11 +39,6 @@ namespace Zadanie2
             var fa = CalculateFx(a);
             var fb = CalculateFx(b);
             int counter = 0;
-
-            if (fa * fb > 0)
-            {
-                return new KeyValuePair<int, double?>(userCounter, null);
-            }
 
             while (counter < userCounter)
             {
@@ -58,14 +59,12 @@ namespace Zadanie2
                     a = c;
                     fa = fc;
                 }
-
                 if (counter == userCounter)
                 {
                     if (!ExecuteNextsSteps(counter))
                     {
                         return new KeyValuePair<int, double?>(counter, null);
                     }
-
                     userCounter += GetNextStepsCount();
                 }
             }
@@ -79,7 +78,8 @@ namespace Zadanie2
         /// <returns>zwraca true jeżeli użytkownik chce kontunuacji, false jeżeli użytkownik nie chce kontynuowac obliczeń</returns>
         private bool ExecuteNextsSteps(int counter)
         {
-            return ReadData.ReadChar(counter) == Kontynuacja;
+            var readChar = ReadData.ReadChar(counter);
+            return readChar == Kontynuacja || readChar == Kontynuacjat;
         }
 
         /// <summary>
@@ -100,6 +100,7 @@ namespace Zadanie2
         {
             var fa = CalculateFx(a);
             var fb = CalculateFx(b);
+
             int counter = 0;
             double c = 0;
 
