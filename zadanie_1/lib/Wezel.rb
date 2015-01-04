@@ -10,7 +10,7 @@ class Wezel
 		  @Potega = potega
 		  @X = x
 		  @WspolczynnikPomocniczy = wspPom
-
+      @WartoscWezla = 0
 		  if(wspolczynnik == "")
 			  @Wspolczynnik = "a#{@Potega}"
 		  else
@@ -25,8 +25,7 @@ class Wezel
 		if (@WspolczynnikPomocniczy == 0 || @Wspolczynnik == "0")
 			return
 		end
-		
-		if(@Wspolczynnik.include? "a")
+		if(@Wspolczynnik.to_s.include? "a")
 			rownianie = "#{@Wspolczynnik}"
 		else
 			wynik = @Wspolczynnik.to_f

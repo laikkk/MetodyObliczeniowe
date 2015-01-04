@@ -19,7 +19,10 @@ class Wielomian
 
   def PostacOgolna()  
     @PodX = "x"
-    @RownanieWielomianu.each { |wezel| wezel.X = "x"} 
+    @RownanieWielomianu.each { |wezel| 
+      wezel.X = "x"
+      # puts wezel.Potega
+    } 
   end
 
   def ToString()
@@ -42,19 +45,19 @@ class Wielomian
   end
 
   def PodstawAn(ans)
+  
     @RownanieWielomianu.each{ |wezel|  
       if(ans.key?(wezel.Wspolczynnik))
-        wezel.Wspolczynnik = ans.key(wezel.Wspolczynnik)
+        wezel.Wspolczynnik = ans[wezel.Wspolczynnik]
       end
     }
   end
   
   def WyliczGdzieSieDa()
     @RownanieWielomianu.each { |wezel|
-      if(wezel.ToString.include? "a")
-          return
+      if(!wezel.ToString.include? "a")
+        wezel.WartoscWezla = wezel.Wspolczynnik.to_f * wezel.WspolczynnikPomocniczy.to_f * (wezel.X.to_f ** wezel.Potega.to_f)
       end
-      wezel.WartoscWezla = wezel.Wspolczynnik.to_f * wezel.Wspolczynnik.to_f * (wezel.X.to_f ** wezel.Potega.to_f)
     }
   end
 
@@ -72,7 +75,7 @@ class Wielomian
       wspolczynnik = wezel.Wspolczynnik.to_f
       nowaPotega = wezel.Potega + 1
       wspolczynnik = wspolczynnik / nowaPotega
-      CalkowanyWielominan << Wezel.new(nowaPotega, "x", wspolczynnik.to_s, wezel.WspolczynnikPomocniczy)
+      @CalkowanyWielominan << Wezel.new(nowaPotega, "x", wspolczynnik.to_s, wezel.WspolczynnikPomocniczy)
     }
   end
 
