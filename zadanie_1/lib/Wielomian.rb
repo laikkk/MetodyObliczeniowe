@@ -21,7 +21,6 @@ class Wielomian
     @PodX = "x"
     @RownanieWielomianu.each { |wezel| 
       wezel.X = "x"
-      # puts wezel.Potega
     } 
   end
 
@@ -44,8 +43,8 @@ class Wielomian
       return sb
   end
 
-  def PodstawAn(ans)
-  
+  # podstawia wartosci zamiast an 
+  def PodstawAn(ans)  
     @RownanieWielomianu.each{ |wezel|  
       if(ans.key?(wezel.Wspolczynnik))
         wezel.Wspolczynnik = ans[wezel.Wspolczynnik]
@@ -79,10 +78,12 @@ class Wielomian
     }
   end
 
+  # zwraca wartosc wspolczynnika ktory nie zostal jeszcze obliczony, tzn zwraca an..a1
   def An()
     return @RownanieWielomianu.first.Wspolczynnik
   end
   
+  # zwraca wartosc tego co stoi przy an..a1, jako wspolczynnik pomocniczy
   def ToCoStoiPrzyA()
     return @RownanieWielomianu.first.WspolczynnikPomocniczy
   end

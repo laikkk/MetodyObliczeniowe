@@ -22,7 +22,7 @@ class Wezel
 	end
 
 	def ToString 
-		if (@WspolczynnikPomocniczy == 0 || @Wspolczynnik == "0")
+		if (@WspolczynnikPomocniczy == 0.0 || @Wspolczynnik == "0.0")
 			return
 		end
 		if(@Wspolczynnik.to_s.include? "a")
