@@ -1,4 +1,6 @@
-require '../../lib/Wezel.rb'
+# require '../../lib/Wezel.rb'
+require_relative '../spec_helper'
+
 
 describe Wezel do
 

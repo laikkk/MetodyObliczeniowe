@@ -1,4 +1,6 @@
-require '../../lib/WczytajDane.rb'
+# require '../../lib/WczytajDane.rb'
+require_relative '../spec_helper'
+
 
 describe WczytajDane do
   describe '#new' do
@@ -27,11 +29,11 @@ describe WczytajDane do
         expect(WczytajDane.new.b).to eq(2.0)
       end
 
-      it 'print ! - Zostana uzyte domyslne wartosci! - !' do
-        dane = WczytajDane.new
-        output = capture_stdout { dane.Wczytaj }
-        expect(output).to include '! - Zostana uzyte domyslne wartosci! - !'
-      end
+      # it 'print ! - Zostana uzyte domyslne wartosci! - !' do
+      #   dane = WczytajDane.new
+      #   output = capture_stdout { dane.Wczytaj }
+      #   expect(output).to include '! - Zostana uzyte domyslne wartosci! - !'
+      # end
     end
   end
 end

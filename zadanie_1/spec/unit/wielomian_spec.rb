@@ -1,4 +1,5 @@
-require '../../lib/Wielomian.rb'
+# require '../../lib/Wielomian.rb'
+require_relative '../spec_helper'
 
 describe Wielomian do
 
