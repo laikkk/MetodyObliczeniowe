@@ -25,11 +25,10 @@ class Rownanie
         if (@PrawaStrona != 0)
             liczbaZLewejStronyRownania = @LewaStrona.ToCoStoiPrzyA
             sumaPozostalychWezlow = 0.0
-            
             @LewaStrona.RownanieWielomianu.each { |wezel| 
-              sumaPozostalychWezlow = (sumaPozostalychWezlow + wezel.WartoscWezla) * -1 }
-
-            # sumaPozostalychWezlow.round(14)
+              sumaPozostalychWezlow = (sumaPozostalychWezlow + wezel.WartoscWezla) }
+            sumaPozostalychWezlow = sumaPozostalychWezlow * -1;
+            sumaPozostalychWezlow.round(14)
             wynik = (@PrawaStrona + sumaPozostalychWezlow) / liczbaZLewejStronyRownania
         end
         return { a => wynik }
@@ -97,10 +96,3 @@ class Rownanie
         return tmp
   end
 end
-
-# wielomian = Wielomian.new("X", 2)
-# puts wielomian.ToString
-
-# pochodna = wielomian.PochodnaWielomianu(Wielomian.new("X", 2))
-
-# puts pochodna.ToString

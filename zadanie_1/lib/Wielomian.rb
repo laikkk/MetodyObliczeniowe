@@ -39,7 +39,6 @@ class Wielomian
           sb += " + #{txt}"
         end
       }
-
       return sb
   end
 
