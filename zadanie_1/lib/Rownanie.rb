@@ -20,8 +20,6 @@ class Rownanie
 
   # wylicza wartosc rownania, zwraca nowy hash a - jest tym co stoi przy an - czyli wartosc do obliczenia, a wynik to wartosc an 
   def Wylicz()
-      puts @LewaStrona.ToString
-      puts "Prawa == #{@PrawaStrona}"
         a = @LewaStrona.An()
         wynik = 0.0
         if (@PrawaStrona != 0)
