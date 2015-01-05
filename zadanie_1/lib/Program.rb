@@ -5,19 +5,17 @@ require_relative './WczytajDane'
 
 dane = WczytajDane.new
 dane.Wczytaj
-if(dane.isValidData)
-  wielomian = Wielomian.new(dane.x0.to_s, dane.ygreks.count);     
-  rownanie = Rownanie.new
-  ukladRownan = rownanie.UtworzUkladRownan(dane.ygreks, wielomian);     
-  tabAn = rownanie.RozwiazUkladRownan(ukladRownan)
+wielomian = Wielomian.new(dane.x0.to_s, dane.ygreks.count);     
+rownanie = Rownanie.new
+ukladRownan = rownanie.UtworzUkladRownan(dane.ygreks, wielomian);     
+tabAn = rownanie.RozwiazUkladRownan(ukladRownan)
 
-  puts "Wielomian w postaci ogolnej\n"
-  wielomian.PodstawAn(tabAn)
-  wielomian.PostacOgolna
-  puts wielomian.ToString
+puts "Wielomian w postaci ogolnej\n"
+wielomian.PodstawAn(tabAn)
+wielomian.PostacOgolna
+puts wielomian.ToString
 
-  wielomian.WyznaczCalke();
-  puts "\nWartosc calki oznaczonej == #{wielomian.PoliczCalke(dane.a, dane.b)}\n\n"
-end
+wielomian.WyznaczCalke();
+puts "\nWartosc calki oznaczonej == #{wielomian.PoliczCalke(dane.a, dane.b)}\n\n"
 
 puts "Koniec programu"
