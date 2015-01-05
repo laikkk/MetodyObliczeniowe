@@ -1,7 +1,6 @@
 # require '../../lib/Rownanie.rb'
 require_relative '../spec_helper'
 
-
 describe Rownanie do
   describe '.ToString' do
     it 'give proper string' do

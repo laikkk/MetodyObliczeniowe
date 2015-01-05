@@ -1,4 +1,3 @@
-# require '../../lib/WczytajDane.rb'
 require_relative '../spec_helper'
 
 
