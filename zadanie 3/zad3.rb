@@ -84,16 +84,16 @@ class Euler
     for i in 0...@n+1
       rows << [@x[i], @euler[i], @midpoint[i], accurate[i]]
     end
-    table = Terminal::Table.new :headings => ['xk', 'metoda Eulera', 'metoda punktu środkowego', 'dokładne rozwiązanie'], :rows => rows
+    table = Terminal::Table.new :headings => ['xk', 'metoda Eulera', 'metoda punktu srodkowego', 'dokladne rozwiazanie'], :rows => rows
     puts table
   end
 end
 
-klasa = Euler.new
-klasa.getN
-klasa.getA
-klasa.calculate_xk
-klasa.calculate_euler
-klasa.calculate_midpoint
-klasa.calculate_accurate
-klasa.make_table
+# klasa = Euler.new
+# klasa.getN
+# klasa.getA
+# klasa.calculate_xk
+# klasa.calculate_euler
+# klasa.calculate_midpoint
+# klasa.calculate_accurate
+# klasa.make_table
