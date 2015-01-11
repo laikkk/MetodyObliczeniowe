@@ -9,16 +9,19 @@ class Euler
   attr_accessor :euler
   attr_accessor :midpoint
   attr_accessor :accurate
-
+  attr_accessor :start_point
 
   def initialize
+    @start_point = 1.0
     @x = Array.new
     @euler = Array.new
     @midpoint = Array.new
     @accurate = Array.new
+    @error_euler = Array.new
+    @error_midpoint = Array.new
   end
 
-  def getN
+  def get_n
     begin
       print "Podaj n: "
       @n = gets.chomp
@@ -26,7 +29,7 @@ class Euler
     @n = @n.to_i
   end
 
-  def getA
+  def get_a
     begin
       print "Podaj a: "
       @a = gets.chomp
@@ -36,12 +39,9 @@ class Euler
 
   def f(x, y)
     return y*(y-1)+x**2*(3-x-x**4)
-    #return 2*x
-    #return -(y**2)
   end
 
   def f1(x, y)
-    #return 1/(1+x)
     return x**3+1
   end
 
@@ -54,46 +54,52 @@ class Euler
   end
 
   def calculate_euler
-    @euler[0] = 1.0
+    @euler[0] = @start_point
     for i in (1...@n+1) do
       @euler[i]=@euler[i-1] + @h * f(@x[i-1], @euler[i-1])
-      #puts "#{euler[i-1]} + #{h} * #{f(x[i-1],euler[i-1])}"
-      #puts '-------------------------'
     end
   end
 
-#puts '-------------------------'
   def calculate_midpoint
-    @midpoint[0] = 1.0
+    @midpoint[0] = @start_point
     for i in (1...@n+1) do
       @midpoint[i] = @midpoint[i-1] + @h * f(@x[i-1] + @h/2, @midpoint[i-1] + (@h/2) * f(@x[i-1], @midpoint[i-1]))
-      #puts "#{midpoint[i-1]} + #{h} * #{f(x[i-1]+h/2,midpoint[i-1]+h/2)} * #{f(x[i-1],midpoint[i-1])}"
-      #puts '-------------------------'
     end
   end
 
   def calculate_accurate
-    @accurate[0] = 1.0
+    @accurate[0] = @start_point
     for i in (1...@n+1) do
       @accurate[i] = f1(@x[i],0)
     end
   end
 
+  def calculate_error
+    for i in (0...@n+1) do
+      @error_euler[i] = (@accurate[i] - @euler[i]).abs
+      @error_midpoint[i] = (@accurate[i] - @midpoint[i]).abs
+    end
+    @error_euler.sort
+    @error_midpoint.sort
+    puts "Maksymalny błąd metody Eulera: #{@error_euler[@error_euler.length-1]}\nMaksymalny błąd metody punktu środkowego: #{@error_midpoint[@error_midpoint.length-1]}"
+  end
+
   def make_table
     rows = []
     for i in 0...@n+1
-      rows << [@x[i], @euler[i], @midpoint[i], accurate[i]]
+      rows << [@x[i], @euler[i], @error_euler[i], @midpoint[i], @error_midpoint[i], @accurate[i]]
     end
-    table = Terminal::Table.new :headings => ['xk', 'metoda Eulera', 'metoda punktu srodkowego', 'dokladne rozwiazanie'], :rows => rows
+    table = Terminal::Table.new :headings => ['xk', 'metoda Eulera', 'błąd', 'metoda punktu środkowego', 'błąd', 'dokładne rozwiązanie'], :rows => rows
     puts table
   end
 end
 
-# klasa = Euler.new
-# klasa.getN
-# klasa.getA
-# klasa.calculate_xk
-# klasa.calculate_euler
-# klasa.calculate_midpoint
-# klasa.calculate_accurate
-# klasa.make_table
+klasa = Euler.new
+klasa.get_n
+klasa.get_a
+klasa.calculate_xk
+klasa.calculate_euler
+klasa.calculate_midpoint
+klasa.calculate_accurate
+klasa.calculate_error
+klasa.make_table
