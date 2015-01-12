@@ -4,12 +4,7 @@ class Euler
 
   attr_accessor :n
   attr_accessor :a
-  attr_accessor :x
   attr_accessor :h
-  attr_accessor :euler
-  attr_accessor :midpoint
-  attr_accessor :accurate
-  attr_accessor :start_point
 
   def initialize
     @start_point = 1.0
@@ -22,18 +17,28 @@ class Euler
   end
 
   def get_n
+    checker = 0
     begin
+      if (checker != 0) 
+        puts "Wpowadzono niepoprawną wartość n. Spróbuj ponownie."
+      end
       print "Podaj n: "
       @n = gets.chomp
+      checker += 1
     end while (!(/^[1-9]\d*$/ =~ @n))
     @n = @n.to_i
   end
 
   def get_a
+    checker = 0
     begin
+      if (checker != 0) 
+        puts "Wpowadzono niepoprawną wartość a. Spróbuj ponownie."
+      end
       print "Podaj a: "
       @a = gets.chomp
-    end while (!(/^(0\.\d+)|([1-9]\.\d+)|([1-9]\d*)$/ =~ @a))
+      checker += 1
+    end while (!(/^(0\.[1-9]+)|(0\.0\d+)|([1-9]\.\d+)|([1-9]\d*)$/ =~ @a))
     @a = a.to_f
   end
 
@@ -79,9 +84,7 @@ class Euler
       @error_euler[i] = (@accurate[i] - @euler[i]).abs
       @error_midpoint[i] = (@accurate[i] - @midpoint[i]).abs
     end
-    @error_euler.sort
-    @error_midpoint.sort
-    puts "Maksymalny błąd metody Eulera: #{@error_euler[@error_euler.length-1]}\nMaksymalny błąd metody punktu środkowego: #{@error_midpoint[@error_midpoint.length-1]}"
+    puts "Maksymalny błąd metody Eulera: #{@error_euler.max}\nMaksymalny błąd metody punktu środkowego: #{@error_midpoint.max}"
   end
 
   def make_table
