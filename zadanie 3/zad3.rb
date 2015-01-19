@@ -1,6 +1,6 @@
 require 'terminal-table'
 
-class Euler
+class Differential
 
   attr_accessor :n
   attr_accessor :a
@@ -17,29 +17,29 @@ class Euler
   end
 
   def get_n
-    checker = 0
+    print_message = false
     begin
-      if (checker != 0) 
+      if (print_message == true)
         puts "Wpowadzono niepoprawną wartość n. Spróbuj ponownie."
       end
       print "Podaj n: "
       @n = gets.chomp
-      checker += 1
+      print_message = true
     end while (!(/^[1-9]\d*$/ =~ @n))
     @n = @n.to_i
   end
 
   def get_a
-    checker = 0
+    print_message = false
     begin
-      if (checker != 0) 
+      if (print_message == true)
         puts "Wpowadzono niepoprawną wartość a. Spróbuj ponownie."
       end
       print "Podaj a: "
       @a = gets.chomp
-      checker += 1
-    end while (!(/^(0\.[1-9]+)|(0\.0\d+)|([1-9]\.\d+)|([1-9]\d*)$/ =~ @a))
-    @a = a.to_f
+      print_message = true
+    end while (@a.to_f <= 0 || (/^[0-9]*(\.\d*)?$/ =~ @a) == nil)
+    @a = @a.to_f
   end
 
   def f(x, y)
@@ -89,20 +89,33 @@ class Euler
 
   def make_table
     rows = []
-    for i in 0...@n+1
-      rows << [@x[i], @euler[i], @error_euler[i], @midpoint[i], @error_midpoint[i], @accurate[i]]
+    i = 0
+    if n <= 10
+      x = 1
+    else
+      x = @n/10
     end
-    table = Terminal::Table.new :headings => ['xk', 'metoda Eulera', 'błąd', 'metoda punktu środkowego', 'błąd', 'dokładne rozwiązanie'], :rows => rows
+    while (i <= @n+1)
+      if (i % x == 0)
+        rows << [@x[i], @euler[i], @midpoint[i], @accurate[i]]
+      end
+      if (x == 0)
+        x += 1
+      else
+        i += x
+      end
+    end
+    table = Terminal::Table.new :headings => ['xk', 'metoda Eulera', 'metoda punktu środkowego', 'dokładne rozwiązanie'], :rows => rows
     puts table
   end
 end
 
-klasa = Euler.new
-klasa.get_n
-klasa.get_a
-klasa.calculate_xk
-klasa.calculate_euler
-klasa.calculate_midpoint
-klasa.calculate_accurate
-klasa.calculate_error
-klasa.make_table
+differential = Differential.new
+differential.get_n
+differential.get_a
+differential.calculate_xk
+differential.calculate_euler
+differential.calculate_midpoint
+differential.calculate_accurate
+differential.make_table
+differential.calculate_error
